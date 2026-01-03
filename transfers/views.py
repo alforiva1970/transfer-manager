@@ -42,6 +42,7 @@ class TransferViewSet(viewsets.ModelViewSet):
     """
     API endpoint for transfers.
     """
+    queryset = Transfer.objects.all()  # Base queryset per DRF
     serializer_class = TransferSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -66,6 +67,7 @@ class ServiceRequestViewSet(viewsets.ModelViewSet):
     """
     API endpoint for service requests.
     """
+    queryset = ServiceRequest.objects.all()  # Base queryset per DRF
     serializer_class = ServiceRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
 

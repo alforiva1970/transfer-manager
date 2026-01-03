@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Django Backend
+  backend:
+    build: .
+    container_name: transfer-backend
+    restart: unless-stopped
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-me}
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+      - DATABASE_URL=sqlite:///db.sqlite3
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+      - backend_static:/app/staticfiles
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/admin/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # React Frontend
+  frontend:
+    build: ./frontend
+    container_name: transfer-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:80" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  backend_static:

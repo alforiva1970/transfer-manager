@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # 3rd party
     'rest_framework',
+    'rest_framework.authtoken',  # Token authentication
     'corsheaders',
 ]
 
@@ -136,6 +137,8 @@ AUTH_USER_MODEL = 'transfers.User'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://localhost:5173",   # Vite dev server
+    "http://127.0.0.1:5173",
 ]
 
 # Email Configuration for Development
